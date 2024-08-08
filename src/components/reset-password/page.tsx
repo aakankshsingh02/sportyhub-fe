@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEye,
@@ -10,71 +9,24 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "./page.module.css";
 
-const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState("");
+const ResetPasswordForm: React.FC<{ token: string }> = ({ token }) => {
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const router = useRouter();
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/auth/login`;
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$/;
-
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setEmail(value);
-    if (!emailRegex.test(value)) {
-      setEmailError("Please enter a valid email address.");
-    } else {
-      setEmailError("");
-    }
-    setErrorMessage("");
-  };
-
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setPassword(value);
-  };
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    if (!emailRegex.test(email)) {
-      setErrorMessage("Please enter a valid email address.");
-      return;
-    }
-
-    setErrorMessage("");
-
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-          localStorage.setItem("token", result.token); 
-          window.location.reload();
-          router.push("/");
-      } else {
-        const { error } = await response.json();
-        setErrorMessage(error || "Login failed. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      setErrorMessage("An error occurred. Please try again.");
-    }
-  };
+    const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$/;
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password/${token}`;
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   const checkPasswordCriteria = (criteria: string) => {
@@ -98,26 +50,82 @@ const LoginPage: React.FC = () => {
     return result;
   };
 
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setPassword(value);
+    if (!passwordRegex.test(value)) {
+      setErrorMessage("Password must meet all criteria.");
+    } else {
+      setErrorMessage("");
+    }
+  };
+
+  const handleConfirmPasswordChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+    setConfirmPassword(value);
+    if (value !== password) {
+      setErrorMessage("Passwords do not match.");
+    } else {
+      setErrorMessage("");
+    }
+  };
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    if (!passwordRegex.test(password)) {
+      setErrorMessage("Password must meet all criteria.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setErrorMessage("Passwords do not match.");
+      return;
+    }
+
+    setErrorMessage("");
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ password }),
+      });
+
+      if (response.ok) {
+        setSuccessMessage(
+          "Password has been reset successfully. Redirecting to login..."
+        );
+        setTimeout(() => {
+          router.push("/login");
+        }, 2000);
+      } else {
+        const { error } = await response.json();
+        setErrorMessage(error || "Failed to reset password. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setErrorMessage("An error occurred. Please try again.");
+    }
+  };
+
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit}>
-        <h2 className={styles.title}>SportyHub</h2>
+        <h2 className={styles.title}>Reset Password</h2>
         {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
-        <div className={styles.inputContainer}>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={handleEmailChange}
-            className={styles.input}
-          />
-          {emailError && <p className={styles.errorMessage}>{emailError}</p>}
-        </div>
+        {successMessage && (
+          <p className={styles.successMessage}>{successMessage}</p>
+        )}
         <div className={styles.inputContainer}>
           <div className={styles.passwordContainer}>
             <input
               type={showPassword ? "text" : "password"}
-              placeholder="Password"
+              placeholder="New Password"
               value={password}
               onChange={handlePasswordChange}
               className={styles.input}
@@ -129,9 +137,25 @@ const LoginPage: React.FC = () => {
               <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
             </span>
           </div>
-          {passwordError && (
-            <p className={styles.errorMessage}>{passwordError}</p>
-          )}
+        </div>
+        <div className={styles.inputContainer}>
+          <div className={styles.passwordContainer}>
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              placeholder="Confirm New Password"
+              value={confirmPassword}
+              onChange={handleConfirmPasswordChange}
+              className={styles.input}
+            />
+            <span
+              onClick={toggleConfirmPasswordVisibility}
+              className={styles.togglePassword}
+            >
+              <FontAwesomeIcon
+                icon={showConfirmPassword ? faEyeSlash : faEye}
+              />
+            </span>
+          </div>
         </div>
         <div className={styles.passwordChecklist}>
           <p className={styles.passwordChecklistTitle}>Password must:</p>
@@ -199,22 +223,11 @@ const LoginPage: React.FC = () => {
           </ul>
         </div>
         <button type="submit" className={styles.submitButton}>
-          Sign In
+          Reset Password
         </button>
-        <div className={styles.textCenter}>
-          <Link href="/forgot-password" className={styles.forgotPasswordLink}>
-            Forgot Password?
-          </Link>
-          <p className={styles.signupPrompt}>
-            Dont have an account?{" "}
-            <Link href="/signup" className={styles.signupLink}>
-              Sign Up
-            </Link>
-          </p>
-        </div>
       </form>
     </div>
   );
 };
 
-export default LoginPage;
+export default ResetPasswordForm;

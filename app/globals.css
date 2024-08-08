@@ -1,3 +1,151 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.toc-list {
+   
+   overflow: hidden;
+   list-style: none;
+   transition-duration: .2s!important;
+   border-style: solid !important;
+   border-right-width: 1px !important ;
+   padding-right: 5px;
+   
+}
+.toc-list ol{
+   border-style: none !important;
+   border-right-width: 1px !important ;
+   padding-right: 5px;
+}
+
+@media (min-width: 1300px) {
+     .gh-sidebar {
+        top: 0;
+        bottom: 0;
+        margin-top: 3vmin;
+        width: 20vw;
+       position: relative;
+       line-height: 1.6rem!important;
+    }
+
+    .gh-sidebar h2{
+      position: relative;
+    }
+    .gh-toc {
+        position: sticky; 
+        top: 10vmin;
+    }
+}
+@media(max-width: 768px){
+  .toc-list {
+   
+    overflow: hidden;
+    list-style: none;
+    transition-duration: .2s!important;
+    border-style: unset !important;
+    padding-right: 5px;
+    
+ }
+  .gh-sidebar{
+    /* position: absolute; */
+    background: #fff;
+    opacity: 2;
+    top: 0;
+    width: 100% !important;
+    overflow-y: scroll;
+    height: 70vh !important;
+    max-height: fit-content !important;
+    /* right: 0vw; */
+  }
+  aside{
+
+    max-height: fit-content !important;
+  }
+
+  .gh-sidebar h2{
+    font-size: 25px!important;
+    margin-bottom: 0.75rem!important ;
+   
+  }
+
+}
+.gh-sidebar h2{
+  font-weight: bolder !important;
+  font-size: 1rem;
+  margin-left: 2rem !important;
+  margin-bottom: 1.5rem ;
+  color: rgb(79, 79, 79);
+}
+
+
+.toc {
+	overflow-y: auto;
+  }
+  .toc > .toc-list {
+	overflow: hidden;
+	position: relative;
+  }
+  .toc > .toc-list li {
+	list-style: none;
+ 
+  }
+  .toc-list {
+	margin: 0;
+	padding-left: 1.875rem;
+  padding-bottom: 10px;
+  }
+  a.toc-link {
+    color: black !important;
+    height: 100%;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    text-decoration: none !important;
+  }
+
+  .is-collapsible {
+	max-height: 1000px;
+	overflow: hidden;
+	transition: all 300ms ease-in-out;
+  }
+  .is-collapsed {
+	max-height: 0%;
+  }
+  .is-position-fixed {
+	position: fixed !important;
+	top: 0;
+  }
+  .is-active-link {
+	font-weight: 700;
+  }
+  a.toc-link.node-name--H2.is-active-link{
+    color: #f1af6a !important;
+  }
+  .toc-list-item .is-active-li a{
+    color: #f1af6a !important;
+    /* display: none !important ; */
+  }
+  /* .toc-link::before {
+	content: " ";
+	display: inline-block;
+	height: 100%;
+	right: -20px;
+	margin-top: -1px;
+	position: absolute;
+	width: 2px;
+  }  */
+
+  @media (max-width: 768px) {
+    /* .toc-link::before {
+
+      content: " ";
+      display: inline-block;
+      height: 100%;
+      right: -20px;
+      margin-top: -1px;
+      position: absolute;
+      width: 2px;
+      }  */
+  }
+.toc-list-item {
+  margin-bottom: 5px; 
+  font-size: 17px;}

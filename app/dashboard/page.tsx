@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
-import LoginPage from "@/src/components/loginpage/page";
+import DashboardPage from "@/src/components/dashboard/page";
+
 
 const LoginMain = () => {
   return (
@@ -9,7 +10,7 @@ const LoginMain = () => {
       <Head>
         <title>SportyHub</title>
       </Head>
-      <LoginPage />
+      <DashboardPage />
     </div>
   );
 };
