@@ -129,7 +129,7 @@ const PostPage = ({ params }: PostProps) => {
       </div>
       <div className="w-full h-full mt-2 px-5 lg:px-20">
         <Image
-          src={post.image}
+          src={post.image || "/default-image.png"}
           alt={post.title}
           height={580}
           width={1080}
