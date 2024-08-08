@@ -1,5 +1,10 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+Check the live deployement here: 
+
+[https://sportyhub-fe.vercel.app/](https://sportyhub-fe.vercel.app/)
+
+
 ## Getting Started
 Clone the repository
 
