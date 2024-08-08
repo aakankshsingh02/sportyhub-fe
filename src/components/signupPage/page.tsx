@@ -10,18 +10,26 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "./page.module.css";
 
-const LoginPage: React.FC = () => {
+const SignupPage: React.FC = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/auth/login`;
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/auth/signup`;
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$/;
+
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setName(value);
+    setErrorMessage("");
+  };
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -55,17 +63,17 @@ const LoginPage: React.FC = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ name, email, password }),
       });
 
       if (response.ok) {
         const result = await response.json();
-          localStorage.setItem("token", result.token); 
-          window.location.reload();
-          router.push("/");
+        localStorage.setItem("token", result.token);
+        window.location.reload();
+        router.push("/");
       } else {
         const { error } = await response.json();
-        setErrorMessage(error || "Login failed. Please try again.");
+        setErrorMessage(error || "Signup failed. Please try again.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -103,6 +111,16 @@ const LoginPage: React.FC = () => {
       <form onSubmit={handleSubmit}>
         <h2 className={styles.title}>SportyHub</h2>
         {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+        <div className={styles.inputContainer}>
+          <input
+            type="text"
+            placeholder="Name"
+            value={name}
+            onChange={handleNameChange}
+            className={styles.input}
+          />
+          {nameError && <p className={styles.errorMessage}>{nameError}</p>}
+        </div>
         <div className={styles.inputContainer}>
           <input
             type="email"
@@ -199,16 +217,13 @@ const LoginPage: React.FC = () => {
           </ul>
         </div>
         <button type="submit" className={styles.submitButton}>
-          Sign In
+          Sign Up
         </button>
         <div className={styles.textCenter}>
-          <Link href="/forgot-password" className={styles.forgotPasswordLink}>
-            Forgot Password?
-          </Link>
           <p className={styles.signupPrompt}>
-            Dont have an account?{" "}
-            <Link href="/signup" className={styles.signupLink}>
-              Sign Up
+            Already have an account?{" "}
+            <Link href="/login" className={styles.signupLink}>
+              Sign In
             </Link>
           </p>
         </div>
@@ -217,4 +232,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default SignupPage;

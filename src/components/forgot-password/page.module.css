@@ -1,0 +1,144 @@
+.container {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.2); 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); 
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3); 
+  color: #333; 
+  margin-top: 5rem;
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #1abc9c; 
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.errorMessage {
+  color: #e74c3c; 
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.inputContainer {
+  margin-bottom: 1rem;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(26, 188, 156, 0.2); 
+  color: #333; 
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.input:focus {
+  background-color: rgba(26, 188, 156, 0.4); 
+  outline: none;
+}
+
+.passwordContainer {
+  position: relative;
+}
+
+.togglePassword {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #16a085; 
+}
+
+.passwordChecklist {
+  margin: 1rem 0;
+}
+
+.passwordChecklistTitle {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #1abc9c; 
+}
+
+.passwordChecklist ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.passwordChecklist li {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0;
+}
+
+.valid {
+  color: #2ecc71; 
+}
+
+.invalid {
+  color: #e74c3c; 
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background-color: #1abc9c; 
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submitButton:hover {
+  background-color: #16a085;
+  transform: translateY(-2px);
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.forgotPasswordLink {
+  color: #1abc9c; 
+  text-decoration: underline;
+  display: inline-block;
+  margin-top: 1rem;
+  transition: color 0.3s ease;
+}
+
+.forgotPasswordLink:hover {
+  color: #16a085; 
+}
+
+.signupPrompt {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.signupLink {
+  color: #0070f3; /* Adjust color as needed */
+  text-decoration: underline;
+}
+
+.signupLink:hover {
+color: #16a085; 
+}

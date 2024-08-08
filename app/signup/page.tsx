@@ -1,17 +1,18 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
-import LoginPage from "@/src/components/loginpage/page";
 
-const LoginMain = () => {
+import SignupPage from "@/src/components/signupPage/page";
+
+const SignupMain = () => {
   return (
     <div>
       <Head>
         <title>SportyHub</title>
       </Head>
-      <LoginPage />
+      <SignupPage />
     </div>
   );
 };
 
-export default LoginMain;
+export default SignupMain;

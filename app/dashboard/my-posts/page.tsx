@@ -1,17 +1,17 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
-import LoginPage from "@/src/components/loginpage/page";
+import MyPostsPage from "@/src/components/my-posts/page";
 
-const LoginMain = () => {
+const MyPosts = () => {
   return (
     <div>
       <Head>
         <title>SportyHub</title>
       </Head>
-      <LoginPage />
+      <MyPostsPage />
     </div>
   );
 };
 
-export default LoginMain;
+export default MyPosts;
