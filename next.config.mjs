@@ -4,7 +4,8 @@ const nextConfig = {
     return [
       {
         source: "/reset-password/:token",
-        destination: "http://localhost:5000/api/auth/reset-password/:token", // Proxy to Backend
+        destination:
+          "https://sportyhub-be.onrender.com/api/auth/reset-password/:token", // Proxy to Backend
       },
     ];
   },
