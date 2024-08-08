@@ -10,12 +10,13 @@ const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
   const token = params.token;
   const [message, setMessage] = useState("");
   const [validToken, setValidToken] = useState(false);
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/auth/reset/${token}`;
 
   useEffect(() => {
     const verifyToken = async () => {
       try {
-        const res = await axios.get(url);
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/reset/${token}`
+        );
         setMessage(res.data.message);
         setValidToken(true);
       } catch (error: any) {
