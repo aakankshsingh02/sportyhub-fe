@@ -2,7 +2,9 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 Check the live deployement here: 
 
-[https://sportyhub-fe.vercel.app/](https://sportyhub-fe.vercel.app/)
+[https://sportyhub-fe.vercel.app/](https://sportyhub-fe.vercel.app/) 
+
+**Please Note: The backend is deployed on Render free services so first load of posts mai take upto 60 seconds.**
 
 
 ## Getting Started
